@@ -1,0 +1,41 @@
+﻿<Window x:Class="ВТ_18_00_Money_Manager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ВТ_18_00_Money_Manager"
+        xmlns:materialDesign="
+        http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="10">
+        <!-- Рядки та стовбці будуть визначені тут -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
+                   Text="Фінансовий менеджер"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,10"/>
+        <GroupBox Header="Додати запис"
+                  Grid.Column="0" Grid.Row="1"
+                  Margin="10">
+            <!-- Вміст GroupBox буде додано тут -->
+            <StackPanel>
+                <TextBlock Text="Тип запису:" Margin="0,0,0,10"/>
+                <ComboBox x:Name="TransactionTypeCombobox">
+                    
+                </ComboBox>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Window>
