@@ -24,5 +24,10 @@ namespace ВТ_18_00_Money_Manager
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

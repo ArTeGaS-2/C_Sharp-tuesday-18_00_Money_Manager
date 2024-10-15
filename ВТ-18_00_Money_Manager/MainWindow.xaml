@@ -7,7 +7,7 @@
         xmlns:materialDesign="
         http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="800">
     <Grid Margin="10">
         <!-- Рядки та стовбці будуть визначені тут -->
         <Grid.RowDefinitions>
@@ -31,11 +31,44 @@
                   Margin="10">
             <!-- Вміст GroupBox буде додано тут -->
             <StackPanel>
-                <TextBlock Text="Тип запису:" Margin="0,0,0,10"/>
-                <ComboBox x:Name="TransactionTypeCombobox">
-                    
+                <TextBlock Text="Тип запису:" Margin="0,5,0,5"/>
+                <ComboBox x:Name="TransactionTypeCombobox" Margin="0,0,0,10">
+                    <ComboBoxItem Content="Доходи"/>
+                    <ComboBoxItem Content="Витрати"/>
                 </ComboBox>
+
+                <TextBlock Text="Категорії:" Margin="0,5,0,5"/>
+                <ComboBox x:Name="CategoryComboBox" Margin="0,0,0,10">
+                    <ComboBoxItem Content="Зарплата"/>
+                    <ComboBoxItem Content="Продукти"/>
+                    <ComboBoxItem Content="Розваги"/>
+                    <ComboBoxItem Content="Інше"/>
+                </ComboBox>
+
+                <TextBlock Text="Сума" Margin="0,5,0,5"/>
+                <TextBox x:Name="AmountTextBox" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Дата" Margin="0,5,0,5"/>
+                <DatePicker x:Name="TransactionDatePicker"
+                            Margin="0,10,0,10"/>
+
+                <Button Content="Додати" Width="100"
+                        HorizontalAlignment="Left"
+                        Click="Button_Click"
+                        Style="{DynamicResource MaterialDesignFlatButton}"/>
             </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Історія транзакцій" Grid.Row="1" Grid.Column="1"
+                  Margin="10">
+            <ListView x:Name="TransactionHistoryListView">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Дата"
+                                        DisplayMemberBinding="{Binding Date}"
+                                        Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </GroupBox>
     </Grid>
 </Window>
