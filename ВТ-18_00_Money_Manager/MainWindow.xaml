@@ -54,10 +54,11 @@
 
                 <Button Content="Додати" Width="100"
                         HorizontalAlignment="Left"
-                        Click="Button_Click"
+                        Click="AddTransaction_Click"
                         Style="{DynamicResource MaterialDesignFlatButton}"/>
             </StackPanel>
         </GroupBox>
+        <!-- Секція історії транзакцій -->
         <GroupBox Header="Історія транзакцій" Grid.Row="1" Grid.Column="1"
                   Margin="10">
             <ListView x:Name="TransactionHistoryListView">
@@ -66,9 +67,27 @@
                         <GridViewColumn Header="Дата"
                                         DisplayMemberBinding="{Binding Date}"
                                         Width="100"/>
+                        <GridViewColumn Header="Тип"
+                                        DisplayMemberBinding="{Binding Type}"
+                                        Width="100"/>
+                        <GridViewColumn Header="Категорія"
+                                        DisplayMemberBinding="{Binding Category}"
+                                        Width="150"/>
+                        <GridViewColumn Header="Сума"
+                                        DisplayMemberBinding="{Binding Amount}"
+                                        Width="100"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </GroupBox>
+        <!-- Секція балансу та виходу -->
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal"
+                    HorizontalAlignment="Right" Margin="10">
+            <TextBlock Text="Баланс: " FontSize="16" FontWeight="Bold"/>
+            <TextBlock x:Name="BalanceTextBlock" Text="0.00 грн" FontSize="16"
+                       FontWeight="Bold" Margin="5,0,0,0"/>
+            <Button Content="Вихід" Width="100" Margin="20,0,0,0" Click="Button_Click_1"
+                    Style="{DynamicResource MaterialDesignFlatButton}"/>
+        </StackPanel>
     </Grid>
 </Window>
