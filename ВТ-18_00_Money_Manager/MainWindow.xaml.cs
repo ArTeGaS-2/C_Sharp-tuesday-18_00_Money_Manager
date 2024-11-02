@@ -21,14 +21,14 @@ namespace ВТ_18_00_Money_Manager
     {
         // ObservableCollection для зберігання транзакцій,
         // автоматично оновлює UI при додаванні/видаленні елементів
-        private ObservableCollection<Transactions> Transactions_;
+        private ObservableCollection<Transaction> Transactions_;
         // Змінна для зберігання поточного балансу
         private decimal Balance;
         public MainWindow()
         {
             InitializeComponent();
             // Ініціалізація колекції транзакцій
-            Transactions_ = new ObservableCollection<Transactions>();
+            Transactions_ = new ObservableCollection<Transaction>();
             // Прив'язка ListView до колекції Transactions
             TransactionHistoryListView.ItemsSource = Transactions_;
             // Ініціалізація балансу як нуль
@@ -37,15 +37,62 @@ namespace ВТ_18_00_Money_Manager
         }
         private void AddTransaction_Click(object sender, RoutedEventArgs e)
         {
+            // Отримання вибраного типу транзакції з ComboBox
+            string type = ((ComboBoxItem)TransactionTypeCombobox.SelectedItem
+                )?.Content.ToString();
+            // Отримання вибраної категорії з ComboBox
+            string category = ((ComboBoxItem)CategoryComboBox.SelectedItem
+                )?.Content.ToString();
+            // Отримання введеної користувачем суми
+            string amountText = AmountTextBox.Text;
+            // Отримання вибраної дати з DataPicker
+            DateTime? date = TransactionDatePicker.SelectedDate;
 
+            // Перевірка що всі поля заповнені
+            if (string.IsNullOrEmpty(type) ||
+                string.IsNullOrEmpty(category) ||
+                string.IsNullOrEmpty(amountText) ||
+                !date.HasValue)
+            {
+                MessageBox.Show("Введіть корректну суму.", "Помилка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            // Спроба перетворити введену суму на значення типу decimal
+            if (!decimal.TryParse(amountText, out decimal amount))
+            {
+                MessageBox.Show("Введіть коректну суму", "Помилка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            if (type == "Витрати")
+            {
+                amount = -amount;
+            }
+            // Створення нового об'єкта Transaction з наданими даними
+            Transaction transaction = new Transaction
+            {
+                Date = date.Value.ToString("dd.MM.yyyy"),
+                Type = type,
+                Category = category,
+                Amount = amount,
+            };
+            // Додавання транзакції до колекції
+            Transactions_.Add(transaction);
+            // Оновлення балансу з урахуванням нової транзакції
+            Balance += amount;
+            // Оновлення BalabceTextBlock для відображуння нового балансу
+            BalanceTextBlock.Text = Balance.ToString("0.00 грн");
+            // Очищення полів введення для наступного запису
+            AmountTextBox.Clear();
+            TransactionDatePicker.SelectedDate = null;
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Exit_Button(object sender, RoutedEventArgs e)
         {
-
+            // Закриття застосунку
+            Application.Current.Shutdown();
         }
     }
     // Клас для представлення фінансової транзакції
-    public class Transtaction
+    public class Transaction
     {
         // Дата транзакції
         public string Date { get; set; }
