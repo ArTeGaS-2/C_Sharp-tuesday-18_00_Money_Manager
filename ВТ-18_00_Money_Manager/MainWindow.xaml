@@ -7,7 +7,7 @@
         xmlns:materialDesign="
         http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="800">
+        Title="MainWindow" Height="600" Width="800">
     <Grid Margin="10">
         <!-- Рядки та стовбці будуть визначені тут -->
         <Grid.RowDefinitions>
@@ -55,6 +55,10 @@
                 <Button Content="Додати" Width="100"
                         HorizontalAlignment="Left"
                         Click="AddTransaction_Click"
+                        Style="{DynamicResource MaterialDesignFlatButton}"/>
+                <Button Content="Відкрити клікер" Width="150"
+                        HorizontalAlignment="Left"
+                        Click="Button_Click"
                         Style="{DynamicResource MaterialDesignFlatButton}"/>
             </StackPanel>
         </GroupBox>

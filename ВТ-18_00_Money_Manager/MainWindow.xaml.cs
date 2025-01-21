@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using System.Diagnostics;
 
 namespace ВТ_18_00_Money_Manager
 {
@@ -89,6 +91,14 @@ namespace ВТ_18_00_Money_Manager
         {
             // Закриття застосунку
             Application.Current.Shutdown();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Process unityGame = new Process();
+            unityGame.StartInfo.FileName = @"..\..\Clicker\ВТ-18-00-C#.exe";
+            unityGame.StartInfo.UseShellExecute = false;
+            unityGame.Start();
         }
     }
     // Клас для представлення фінансової транзакції
