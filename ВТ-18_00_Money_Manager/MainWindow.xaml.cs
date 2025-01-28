@@ -21,6 +21,8 @@ namespace ВТ_18_00_Money_Manager
 {
     public partial class MainWindow : Window
     {
+        public static MainWindow Instance;
+
         // ObservableCollection для зберігання транзакцій,
         // автоматично оновлює UI при додаванні/видаленні елементів
         private ObservableCollection<Transaction> Transactions_;
@@ -28,6 +30,15 @@ namespace ВТ_18_00_Money_Manager
         private decimal Balance;
         public MainWindow()
         {
+            if (Instance == null)
+            {
+                Instance = new MainWindow();
+            }
+            else
+            {
+                Instance = this;
+            }
+
             InitializeComponent();
             // Ініціалізація колекції транзакцій
             Transactions_ = new ObservableCollection<Transaction>();
@@ -50,6 +61,8 @@ namespace ВТ_18_00_Money_Manager
             // Отримання вибраної дати з DataPicker
             DateTime? date = TransactionDatePicker.SelectedDate;
 
+            bool canBeAdded = true; // Перевіряє можливість додати транзакцію
+
             // Перевірка що всі поля заповнені
             if (string.IsNullOrEmpty(type) ||
                 string.IsNullOrEmpty(category) ||
@@ -58,34 +71,81 @@ namespace ВТ_18_00_Money_Manager
             {
                 MessageBox.Show("Введіть корректну суму.", "Помилка",
                     MessageBoxButton.OK, MessageBoxImage.Error);
+                canBeAdded = false;
             }
             // Спроба перетворити введену суму на значення типу decimal
             if (!decimal.TryParse(amountText, out decimal amount))
             {
                 MessageBox.Show("Введіть коректну суму", "Помилка",
                     MessageBoxButton.OK, MessageBoxImage.Error);
+                canBeAdded = false;
             }
             if (type == "Витрати")
             {
                 amount = -amount;
             }
-            // Створення нового об'єкта Transaction з наданими даними
-            Transaction transaction = new Transaction
+            if (type == "Доходи")
             {
-                Date = date.Value.ToString("dd.MM.yyyy"),
-                Type = type,
-                Category = category,
-                Amount = amount,
-            };
-            // Додавання транзакції до колекції
-            Transactions_.Add(transaction);
-            // Оновлення балансу з урахуванням нової транзакції
-            Balance += amount;
-            // Оновлення BalabceTextBlock для відображуння нового балансу
-            BalanceTextBlock.Text = Balance.ToString("0.00 грн");
-            // Очищення полів введення для наступного запису
-            AmountTextBox.Clear();
-            TransactionDatePicker.SelectedDate = null;
+                switch (category)
+                {
+                    case "Комунальні платежі":
+                        MessageBox.Show("Невірна категорія", "Помилка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        canBeAdded = false;
+                        break;
+                    case "Освіта":
+                        MessageBox.Show("Невірна категорія", "Помилка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        canBeAdded = false;
+                        break;
+                    case "Медицина":
+                        MessageBox.Show("Невірна категорія", "Помилка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        canBeAdded = false;
+                        break;
+                    case "Продукти":
+                        MessageBox.Show("Невірна категорія", "Помилка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        canBeAdded = false;
+                        break;
+                    case "Розваги":
+                        MessageBox.Show("Невірна категорія", "Помилка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        canBeAdded = false;
+                        break;
+                    case "Волонтерство":
+                        MessageBox.Show("Невірна категорія", "Помилка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        canBeAdded = false;
+                        break;
+                    case "Гардероб":
+                        MessageBox.Show("Невірна категорія", "Помилка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        canBeAdded = false;
+                        break;
+                }
+            }
+            
+            if (canBeAdded)
+            {
+                // Створення нового об'єкта Transaction з наданими даними
+                Transaction transaction = new Transaction
+                {
+                    Date = date.Value.ToString("dd.MM.yyyy"),
+                    Type = type,
+                    Category = category,
+                    Amount = amount,
+                };
+                // Додавання транзакції до колекції
+                Transactions_.Add(transaction);
+                // Оновлення балансу з урахуванням нової транзакції
+                Balance += amount;
+                // Оновлення BalabceTextBlock для відображуння нового балансу
+                BalanceTextBlock.Text = Balance.ToString("0.00 грн");
+                // Очищення полів введення для наступного запису
+                AmountTextBox.Clear();
+                TransactionDatePicker.SelectedDate = null;
+            }
         }
         private void Exit_Button(object sender, RoutedEventArgs e)
         {
